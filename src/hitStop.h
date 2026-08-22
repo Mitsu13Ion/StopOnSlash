@@ -235,7 +235,7 @@ public:
 		auto& trampoline = SKSE::GetTrampoline();
 		REL::Relocation<uintptr_t> hook{ RELOCATION_ID(35565, 36564) };  // 5B2FF0, 5D9F50, main update
 
-		_Nullsub = trampoline.write_call<5>(hook.address() + RELOCATION_OFFSET(0x748, 0xC26), Nullsub);  // 5B3738, 5DAB76
+		_Nullsub = trampoline.write_call<5>(hook.address() + REL::Relocate(0x748, REL::Module::get().version() >= SKSE::RUNTIME_SSE_1_7_99 ? 0xC38 : 0xC26), Nullsub);  // 5B3738, 5DAB76
 	}
 
 private:
