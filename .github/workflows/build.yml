@@ -1,0 +1,29 @@
+name: Build Windows DLL
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: lukka/get-cmake@latest
+      - uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: ee12231b20c95013c6638d845d04c91559a1d1ff
+      - name: Configure
+        run: cmake -S . --preset=ALL
+      - name: Build
+        run: cmake --build build --config Release
+      - name: List outputs
+        run: Get-ChildItem -Recurse build -Include *.dll,*.pdb | Select-Object FullName,Length
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dTryHitStop
+          path: |
+            build/**/Release/*.dll
+            build/**/Release/*.pdb
+            build/**/release/*.dll
+            build/**/release/*.pdb
+          if-no-files-found: error
