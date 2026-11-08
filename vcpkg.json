@@ -20,6 +20,22 @@
     {
       "name": "spdlog",
       "version>=": "1.16.0"
+    },
+    {
+      "name": "nlohmann-json",
+      "version>=": "3.12.0"
+    },
+    {
+      "name": "rapidcsv",
+      "version>=": "8.90"
+    },
+    {
+      "name": "toml11",
+      "version>=": "4.4.0"
+    },
+    {
+      "name": "xbyak",
+      "version>=": "7.28"
     }
   ],
   "builtin-baseline": "ee12231b20c95013c6638d845d04c91559a1d1ff"
