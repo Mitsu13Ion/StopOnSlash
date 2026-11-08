@@ -15,7 +15,7 @@ jobs:
       - name: Configure
         env:
           VCPKG_BINARY_SOURCES: clear
-        run: cmake -S . --preset=ALL
+        run: cmake -S . --preset=ALL -DBUILD_TESTS=OFF -DSKSE_SUPPORT_XBYAK=ON
       - name: vcpkg logs on failure
         if: failure()
         shell: pwsh
