@@ -13,7 +13,15 @@ jobs:
         with:
           vcpkgGitCommitId: ee12231b20c95013c6638d845d04c91559a1d1ff
       - name: Configure
+        env:
+          VCPKG_BINARY_SOURCES: clear
         run: cmake -S . --preset=ALL
+      - name: vcpkg logs on failure
+        if: failure()
+        shell: pwsh
+        run: |
+          Get-Content build/vcpkg-manifest-install.log -ErrorAction SilentlyContinue | Select-Object -Last 120
+          Get-ChildItem -Recurse vcpkg/buildtrees -Include *-err.log,*-out.log -ErrorAction SilentlyContinue | ForEach-Object { "=== $($_.FullName)"; Get-Content $_ | Select-Object -Last 40 }
       - name: Build
         run: cmake --build build --config Release
       - name: List outputs
